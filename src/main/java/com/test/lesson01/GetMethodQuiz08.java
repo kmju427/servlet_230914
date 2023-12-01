@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/lesson01/quiz08")
 public class GetMethodQuiz08 extends HttpServlet {
-
+	// 테스트 주석 추가
+	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 한글 깨짐 방지
@@ -43,7 +44,20 @@ public class GetMethodQuiz08 extends HttpServlet {
 		while (iter.hasNext()) {
 			String line = iter.next();
 			
+			// 검색
+//			if (line.contains(keyword)) {
+//				out.print(line + "<br>");
+//			}
+			
+			// (1)
+//			if (line.contains(keyword)) {
+//				String[] words = line.split(keyword); // 0 : 앞 문장, 1 : 뒷 문장
+//				out.print(words[0] + "<b>" + keyword + "</b>" + words[1] + "<br>");
+//			}
+			
+			// (2)
 			if (line.contains(keyword)) {
+				line = line.replace(keyword, "<b>" + keyword + "</b>");
 				out.print(line + "<br>");
 			}
 		}
