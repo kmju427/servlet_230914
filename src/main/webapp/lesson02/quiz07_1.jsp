@@ -17,6 +17,7 @@
 		// out.print(keyword);
 		String starPointFilter = request.getParameter("starPointFilter");
 		// out.print(starPointFilter); -> "true" or null
+		boolean exclude = starPointFilter != null;
 	
 		List<Map<String, Object>> list = new ArrayList<>();
 	    Map<String, Object> map = new HashMap<String, Object>() {{ put("name", "버거킹"); put("menu", "햄버거"); put("point", 4.3); } };
@@ -34,6 +35,7 @@
 	    map = new HashMap<String, Object>() {{ put("name", "반올림피자"); put("menu", "피자"); put("point", 4.3); } };
 	    list.add(map);
 	%>
+	
 	<div class="container">
 		<h1 class="text-center">검색 결과</h1>
 		
@@ -48,7 +50,11 @@
 			<tbody>
 				<%
 					for (Map<String, Object> item : list) { // map1 | map2 | map3 ...
-						if (keyword.equals(item.get("menu"))) {
+						if (keyword.equals(item.get("menu"))) { // menu도 Object로 넘어오나 equals가 Object도 받아 들이기 때문에 casting 안 해도 된다.
+							// skip 조건 : 체크가 되어 있고 스킵되어야 하는 조건이면 continue로 넘김
+							if (exclude && (double)item.get("point") <= 4.0) { // Object를 숫자로 바꿔줘야 하기 때문에 casting 해야 한다.
+								continue; // 아래 코드 수행하지 않고 skip
+							}
 				%>
 					<tr>
 						<td><%= item.get("menu") %></td>
